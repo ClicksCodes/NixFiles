@@ -23,6 +23,7 @@
           ./modules/fuck.nix
           ./modules/node.nix
           ./modules/kitty.nix
+          ./modules/tesseract.nix
           {
             security.sudo.wheelNeedsPassword = false;
             users.mutableUsers = false;
