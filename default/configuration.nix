@@ -85,9 +85,18 @@
   users.users.nucleus = {
     isSystemUser = true;
     createHome = true;
+    home = "/services/nucleus";
     group = "clicks";
     shell = pkgs.bashInteractive;
   };
+  users.users.websites = {
+    isSystemUser = true;
+    createHome = true;
+    home = "/services/websites";
+    group = "clicks";
+    shell = pkgs.bashInteractive;
+  };
+  users.groups.clicks = { };
 
   programs.zsh.enable = true;
   # List packages installed in system profile. To search, run:
