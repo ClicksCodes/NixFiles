@@ -26,6 +26,7 @@
           ./modules/tesseract.nix
           ./modules/doas.nix
           ./modules/code-server.nix
+          ./modules/ecryptfs.nix
           {
             users.mutableUsers = false;
           }
