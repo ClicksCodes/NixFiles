@@ -25,6 +25,7 @@
           ./modules/kitty.nix
           ./modules/tesseract.nix
           ./modules/doas.nix
+          ./modules/code-server.nix
           {
             users.mutableUsers = false;
           }
