@@ -88,7 +88,7 @@
     shell = pkgs.zsh;
 
     openssh.authorizedKeys.keys = [
-      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAICbuu0UvM5ouI70uX5zHoBP8sZElgsu/QTQizDqQsTxIAAAABHNzaDo= pineapplefan@Pineapplefan"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIFXa8ow7H8XpTrwYI+oSgLFfb6YNZanwv/QCKvEKiERSAAAABHNzaDo= pineapplefan@Pineapplefan"
     ];
   };
   users.users.nucleus = {
@@ -128,6 +128,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.openssh.settings.passwordAuthentication = false;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
