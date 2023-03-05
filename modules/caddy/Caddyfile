@@ -5,6 +5,7 @@ http://api.clicks.codes {
           trusted_proxies 192.168.81.136
         }
     }
+    respond 404
 }
 
 http://clicks.codes {
