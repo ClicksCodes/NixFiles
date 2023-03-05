@@ -24,14 +24,15 @@
           ./modules/node.nix
           ./modules/kitty.nix
           ./modules/tesseract.nix
+          ./modules/doas.nix
           {
-            security.sudo.wheelNeedsPassword = false;
             users.mutableUsers = false;
           }
         ];
       };
 
     deploy.nodes.clicks = {
+      sudo = "doas -u";
       profiles.system = {
         remoteBuild = true;
         user = "root";
