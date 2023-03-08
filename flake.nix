@@ -27,6 +27,7 @@
           ./modules/doas.nix
           ./modules/code-server.nix
           ./modules/ecryptfs.nix
+          ./modules/clamav.nix
           {
             users.mutableUsers = false;
           }
