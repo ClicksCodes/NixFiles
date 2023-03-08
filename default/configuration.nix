@@ -124,7 +124,9 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
+  nix.settings.trusted-users = [ "minion" ]; # please do not add all wheel, only
+  # add users when there is a specific need
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable the OpenSSH daemon.
