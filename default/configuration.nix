@@ -89,6 +89,7 @@
 
     openssh.authorizedKeys.keys = [
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIFXa8ow7H8XpTrwYI+oSgLFfb6YNZanwv/QCKvEKiERSAAAABHNzaDo= pineapplefan@Pineapplefan"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAJNFMUYiEepGrIAbUM+Hlw/OuGWc8CNQsYlJ7519RVmeu+/vqEQbhchySTelibD19YqsZ7ICfYxAeQzOqHdXfs="
     ];
   };
   users.users.nucleus = {
