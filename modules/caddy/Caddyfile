@@ -1,11 +1,11 @@
 
 http://api.clicks.codes {
-    handle_path /nucleus {
+    handle_path /nucleus/* {
         reverse_proxy http://127.0.0.1:10000 {
           trusted_proxies 192.168.81.136
         }
     }
-    respond 404
+    respond 503
 }
 
 http://clicks.codes {
