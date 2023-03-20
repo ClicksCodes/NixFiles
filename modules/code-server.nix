@@ -5,7 +5,7 @@
     auth = "none";
     package = (pkgs.buildFHSUserEnv {
       name = "code-server";
-      targetPkgs = pkgs: [ pkgs.code-server ];
+      targetPkgs = pkgs: with pkgs; [ code-server git ];
       runScript = "code-server";
     });
   };
