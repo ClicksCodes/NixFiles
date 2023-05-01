@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [ gh git ];
 
   services.gitea = {
-    enable = true;
+    enable = false;
     rootUrl = "https://git.clicks.codes/";
     httpPort = 6064;
     settings.mailer = {
