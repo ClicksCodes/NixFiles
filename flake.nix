@@ -2,6 +2,7 @@
   description = "A flake to deploy and configure Clicks' NixOS server";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
 
