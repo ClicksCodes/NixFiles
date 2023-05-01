@@ -19,3 +19,9 @@ http://www.clicks.codes {
       trusted_proxies 192.168.81.136
     }
 }
+
+http://etherpad.clicks.codes {
+  reverse_proxy http://127.0.0.1:9001 {
+    trusted_proxies 192.168.81.136
+  }
+}
