@@ -6,6 +6,9 @@
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
 
+  inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.home-manager.inputs.utils.follows = "deploy-rs/utils";
+
   outputs = { self, nixpkgs, deploy-rs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
