@@ -34,6 +34,7 @@
             ./modules/fail2ban.nix
             ./modules/fuck.nix
             ./modules/git.nix
+            ./modules/grafana.nix
             ./modules/home-manager-users.nix
             ./modules/kitty.nix
             ./modules/mongodb.nix
