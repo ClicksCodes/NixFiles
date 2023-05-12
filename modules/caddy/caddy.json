@@ -96,6 +96,33 @@
             {
               "match": [
                 {
+                  "host": ["logs.clicks.codes"]
+                }
+              ],
+              "handle": [
+                {
+                  "handler": "subroute",
+                  "routes": [
+                    {
+                      "handle": [
+                        {
+                          "handler": "reverse_proxy",
+                          "upstreams": [
+                            {
+                              "dial": "127.0.0.1:9052"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "match": [
+                {
                   "host": ["etherpad.clicks.codes"]
                 }
               ],

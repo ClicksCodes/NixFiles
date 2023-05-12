@@ -1,0 +1,9 @@
+keys:
+  - &clicks_minion age15mv77dpnh5762gk5rsw2u79uza4tg8cu6r3nlwjudlzmdqqck3ss6mg9dy
+  - &server_dc1 age1fxxnmkeuqhhct93c43pwkzhuzzq8857s5hye6pgfpku70kjn4ecqtamfqr
+creation_rules:
+  - path_regex: secrets/.*
+    key_groups:
+    - age:
+      - *clicks_minion
+      - *server_dc1

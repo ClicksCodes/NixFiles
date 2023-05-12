@@ -2,17 +2,25 @@
   description = "A flake to deploy and configure Clicks' NixOS server";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+  inputs.nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
   inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
+  inputs.sops-nix.url = "github:Mic92/sops-nix";
 
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
   inputs.home-manager.inputs.utils.follows = "deploy-rs/utils";
 
-  outputs = { self, nixpkgs, deploy-rs, home-manager, ... }@inputs:
+  inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+  outputs = { self, nixpkgs, deploy-rs, home-manager, sops-nix, nixpkgs-unstable, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -27,6 +35,7 @@
             ./modules/caddy.nix
             ./modules/clamav.nix
             ./modules/code-server.nix
+            ./modules/dmarc.nix
             ./modules/dnsmasq.nix
             ./modules/doas.nix
             ./modules/docker.nix
@@ -41,8 +50,10 @@
             ./modules/node.nix
             ./modules/samba.nix
             ./modules/tesseract.nix
+            sops-nix.nixosModules.sops
             {
               users.mutableUsers = false;
+              _module.args = { inherit pkgs-unstable; };
             }
           ];
         };
