@@ -4,8 +4,9 @@
     enable = true;
     withJemalloc = true;
 
-    settings = {
+    settings = rec {
       server_name = "coded.codes";
+      auto_join_rooms = [ "#general:${server_name}" ];
       enable_registration = true;
       registration_requires_token = true;
       registration_shared_secret = "!!registration_shared_secret!!";
