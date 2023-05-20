@@ -2,7 +2,7 @@
   home.packages = [ pkgs.nodejs-14_x ];
 
   services.git-sync = {
-    enable = true;
+    enable = false;
 
     repositories = {
       "etherpad" = {
