@@ -1,5 +1,5 @@
 # https://github.com/NixOS/nixpkgs/issues/14671#issuecomment-1016376290
-{ lib, pkgs, fetchFromGitHub, buildGoModule, plugins ? [ ], vendorSha256 ? "" }:
+{ lib, pkgs, fetchFromGitHub, buildGoModule, plugins ? [ ] }:
 
 with lib;
 with pkgs;
@@ -11,12 +11,12 @@ let
     rev = "aa8cf68a3b5197c45a8b4ffd99b74465f0b5a6b1";
     hash = "sha256-3KcoOAB+YkOU8qKM75uQo58/dljRBmP25dionQ9K2dc=";
   };
-  caddySrc = srcOnly (fetchFromGitHub {
+  caddySrc = fetchFromGitHub {
     owner = "caddyserver";
     repo = "caddy";
     rev = "v2.6.4";
     hash = "sha256-3a3+nFHmGONvL/TyQRqgJtrSDIn0zdGy9YwhZP17mU0=";
-  });
+  };
 
   combinedSrc = stdenv.mkDerivation {
     name = "caddy-src";
@@ -37,6 +37,7 @@ let
       go mod init caddy
       echo "package main" >> main.go
       echo 'import caddycmd "github.com/caddyserver/caddy/v2/cmd"' >> main.go
+      echo 'import _ "github.com/caddyserver/caddy/v2/modules/standard"' >> main.go
       echo 'import _ "github.com/mholt/caddy-l4"' >> main.go
       echo "func main(){ caddycmd.Main() }" >> main.go
       go mod edit -require=github.com/caddyserver/caddy/v2@v2.6.4
@@ -51,7 +52,7 @@ buildGoModule {
 
   src = combinedSrc;
 
-  vendorHash = "sha256-GmgK2gPCkXXqVcxx+U0h7zJwRGBqFiBA7R0FwHY0SF0=";
+  vendorHash = "sha256-a49J7gKBYi9mQLlg+YFGaOetvbup5yRrWzX7kicvy+o=";
 
   overrideModAttrs = _: {
     postPatch = "cd ourcaddy";

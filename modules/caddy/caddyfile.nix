@@ -38,6 +38,26 @@ let
     match = [{ host = hosts; }];
     terminal = true;
   };
+  HTTPFileServerRoute = hosts: root: {
+    handle = [
+      {
+        handler = "subroute";
+        routes = [
+          {
+            handle = [
+              {
+                handler = "file_server";
+                inherit root;
+              }
+            ];
+          }
+        ];
+      }
+    ];
+    match = [{ host = hosts; }];
+    terminal = true;
+  };
+
   TCPReverseProxyRoute = ports: upstreams: {
     listen = map (port: "0.0.0.0:${toString port}") ports;
     routes = [
@@ -53,7 +73,7 @@ let
     ];
   };
 in
-{
+{ pkgs, lib }: {
   apps = {
     http = {
       servers = {
@@ -250,6 +270,16 @@ in
               match = [{ host = [ "coded.codes" ]; }];
               terminal = true;
             }
+            (HTTPFileServerRoute [ "matrix.coded.codes" ] (
+              pkgs.element-web.override {
+                conf = {
+                  default_server_config = lib.pipe ./coded.codes/.well-known/matrix [
+                    builtins.readFile
+                    builtins.fromJSON
+                  ];
+                };
+              }
+            ))
           ];
         };
         srv1 = {
