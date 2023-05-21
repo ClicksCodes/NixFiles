@@ -1,6 +1,7 @@
 {
   "m.server": "matrix-backend.coded.codes:443",
   "m.homeserver": {
-    "base_url": "https://matrix-backend.coded.codes:443"
+    "base_url": "https://matrix-backend.coded.codes:443",
+    "server_name": "coded.codes"
   }
 }
