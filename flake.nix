@@ -51,6 +51,7 @@
               ./modules/grafana.nix
               ./modules/home-manager-users.nix
               ./modules/kitty.nix
+              ./modules/loginctl-linger.nix
               ./modules/matrix.nix
               ./modules/mongodb.nix
               ./modules/node.nix
