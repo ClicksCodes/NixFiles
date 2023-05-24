@@ -37,6 +37,8 @@
       };
 
       services.caddy.configFile = lib.mkForce config.scalpel.trafos."caddy.json".destination;
+
+      systemd.services.caddy.reloadTriggers = [ caddy_json ];
     }
   else { }
 )

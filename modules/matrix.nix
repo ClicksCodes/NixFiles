@@ -82,6 +82,8 @@ lib.recursiveUpdate
           "${base.config.systemd.services.matrix-synapse.preStart}"
       );
 
+      systemd.services.matrix-synapse.restartTriggers = [ synapse_cfgfile ];
+
       environment.systemPackages =
         with lib; let
           cfg = config.services.matrix-synapse;

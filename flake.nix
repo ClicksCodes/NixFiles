@@ -29,7 +29,7 @@
         config.allowUnfree = true;
       };
     in
-    {
+    rec {
       nixosConfigurations.clicks =
         let
           base = nixpkgs.lib.nixosSystem {
@@ -73,6 +73,13 @@
             scalpel.nixosModules.scalpel
           ];
           specialArgs = { inherit base; };
+        };
+
+      nixosConfigurations.clicks-without-mongodb =
+        nixosConfigurations.clicks.extendModules {
+          modules = [
+            { services.mongodb.enable = nixpkgs.lib.mkForce false; }
+          ];
         };
 
       deploy.nodes.clicks = {
