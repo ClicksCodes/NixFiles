@@ -1,4 +1,5 @@
 { base, config, lib, pkgs, ... }:
+lib.recursiveUpdate
 {
   services.matrix-synapse = {
     enable = true;
@@ -46,7 +47,7 @@
       path = config.services.matrix-synapse.settings.signing_key_path;
     };
   };
-} // (
+} (
   let
     isDerived = base != null;
   in
