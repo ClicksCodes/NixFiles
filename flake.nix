@@ -58,6 +58,7 @@
               ./modules/postgres.nix
               ./modules/samba.nix
               ./modules/scalpel.nix
+              ./modules/static-ip.nix
               ./modules/tesseract.nix
               sops-nix.nixosModules.sops
               {
@@ -120,6 +121,38 @@
             builtins.attrNames
             (map (name: {
               inherit name; value = mkServiceConfig name;
+            }))
+            builtins.listToAttrs
+          ]
+        ) // (
+          let
+            mkBlankConfig = username:
+              {
+                remoteBuild = true;
+                user = username;
+
+                profilePath = "/nix/var/nix/profiles/per-user/${username}/home-manager";
+                path =
+                  deploy-rs.lib.x86_64-linux.activate.home-manager (home-manager.lib.homeManagerConfiguration
+                    {
+                      inherit pkgs;
+                      modules = [
+                        {
+                          home.username = username;
+                          home.stateVersion = "22.11";
+                          programs.home-manager.enable = true;
+                        }
+                        "${./homes}/${username}"
+                      ];
+                    });
+              };
+          in
+          nixpkgs.lib.pipe ./homes [
+            builtins.readDir
+            (nixpkgs.lib.filterAttrs (_name: value: value == "directory"))
+            builtins.attrNames
+            (map (name: {
+              inherit name; value = mkBlankConfig name;
             }))
             builtins.listToAttrs
           ]
