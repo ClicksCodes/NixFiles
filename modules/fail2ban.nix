@@ -29,6 +29,13 @@
     };
     banaction-allports = "iptables-allports";
     banaction = config.services.fail2ban.banaction-allports;
+    bantime = "24h";
+    bantime-increment = {
+      enable = true;
+      rndtime = "1h";
+      overalljails = true;
+      factor = "24";
+    };
   };
   environment.etc = {
     "fail2ban/filter.d/mailu-auth-fail.conf".text = ''
