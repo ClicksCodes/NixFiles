@@ -37,6 +37,7 @@
             modules = [
               ./default/configuration.nix
               ./default/hardware-configuration.nix
+              ./modules/cache.nix
               ./modules/caddy.nix
               ./modules/clamav.nix
               ./modules/code-server.nix
