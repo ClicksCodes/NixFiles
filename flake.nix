@@ -1,30 +1,24 @@
 {
   description = "A flake to deploy and configure Clicks' NixOS server";
 
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
-  inputs.nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
-  inputs.home-manager.url = "github:nix-community/home-manager/release-22.11";
+  inputs.home-manager.url = "github:nix-community/home-manager/release-23.05";
   inputs.sops-nix.url = "github:Mic92/sops-nix";
   inputs.scalpel.url = "github:polygon/scalpel";
 
   inputs.home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.home-manager.inputs.utils.follows = "deploy-rs/utils";
 
   inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.scalpel.inputs.nixpkgs.follows = "nixpkgs";
   inputs.scalpel.inputs.sops-nix.follows = "sops-nix";
 
-  outputs = { self, nixpkgs, deploy-rs, home-manager, sops-nix, scalpel, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, deploy-rs, home-manager, sops-nix, scalpel, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -40,7 +34,6 @@
               ./modules/cache.nix
               ./modules/caddy.nix
               ./modules/clamav.nix
-              ./modules/code-server.nix
               ./modules/dmarc.nix
               ./modules/dnsmasq.nix
               ./modules/doas.nix
@@ -59,12 +52,12 @@
               ./modules/postgres.nix
               ./modules/samba.nix
               ./modules/scalpel.nix
+              ./modules/ssh.nix
               ./modules/static-ip.nix
               ./modules/tesseract.nix
               sops-nix.nixosModules.sops
               {
                 users.mutableUsers = false;
-                _module.args = { inherit pkgs-unstable; };
               }
             ];
             specialArgs = { base = null; };

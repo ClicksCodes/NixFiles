@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    nodejs-19_x
+    nodejs_20
     nodePackages.typescript
     yarn
     nodePackages.pm2

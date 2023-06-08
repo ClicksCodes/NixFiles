@@ -3,12 +3,12 @@
     nscd.enableNsncd = true;
     dnsmasq = {
       enable = true;
-      servers = [ "1.1.1.1" "1.0.0.1" ];
-      extraConfig = ''
-        local=/local/
-        domain=local
-        expand-hosts
-      '';
+      settings = {
+        servers = [ "1.1.1.1" "1.0.0.1" ];
+        local = "/local/";
+        domain = "local";
+        expand-hosts = true;
+      };
     };
     avahi = {
       enable = true;
