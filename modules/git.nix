@@ -3,8 +3,6 @@
 
   services.gitea = {
     enable = false;
-    rootUrl = "https://git.clicks.codes/";
-    httpPort = 6064;
     settings.mailer = {
       ENABLED = true;
       FROM = "git@clicks.codes";
@@ -25,6 +23,8 @@
       DEFAULT_ENABLE_TIMETRACKING = true;
     };
     settings.server = {
+      ROOT_URL = "https://git.clicks.codes/";
+      HTTP_PORT = 6064;
       SSH_DOMAIN = "ssh.clicks.codes";
       DOMAIN = "localhost";
       DISABLE_SSH = false;

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }: {
+{ config, lib, pkgs, ... }: {
   users.users.parsedmarc = {
     isSystemUser = true;
     createHome = true;
@@ -29,6 +29,8 @@
       host = "mail.clicks.codes";
       user = "dmarc@clicks.codes";
       password = { _secret = config.sops.secrets.imap_password.path; };
+    };
+    settings.mailbox = {
       watch = true;
       delete = false;
     };
@@ -47,5 +49,4 @@
     chgrp clicks ${config.services.geoipupdate.settings.DatabaseDirectory}
     # The license agreement does not allow us to let non-clicks users access the database
   '';
-  services.elasticsearch.package = pkgs-unstable.elasticsearch;
 }
