@@ -73,7 +73,7 @@ let
     ];
   };
 in
-{ pkgs, lib }: {
+{ pkgs, lib, config }: {
   apps = {
     http.servers = {
       srv0 = {
@@ -279,6 +279,7 @@ in
               };
             }
           ))
+          (HTTPReverseProxyRoute [ "passwords.clicks.codes" ] [ "localhost:${config.services.vaultwarden.config.ROCKET_PORT}" ])
         ];
       };
       srv1 = {

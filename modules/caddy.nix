@@ -2,7 +2,7 @@
   services.caddy.enable = true;
   services.caddy.configFile = lib.pipe ./caddy/caddyfile.nix [
     import
-    (f: f { inherit pkgs lib; })
+    (f: f { inherit pkgs lib config; })
     builtins.toJSON
     (pkgs.writeText "caddy.json")
   ];

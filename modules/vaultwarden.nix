@@ -1,4 +1,4 @@
-{ pkgs... }: {
+{ pkgs, ... }: {
     environment.systemPackages = with pkgs; [ vaultwarden ];
 
     services.vaultwarden.enable = true;
@@ -47,7 +47,7 @@
 
 
         # YubiKey Settings
-        YUBICO_CLIENT_ID="FILL_ME_IN";
+        YUBICO_CLIENT_ID="89788";
         YUBICO_SECRET_KEY="FILL_ME_IN";
 
 
