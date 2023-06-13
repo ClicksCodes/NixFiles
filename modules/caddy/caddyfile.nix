@@ -279,7 +279,7 @@ in
               };
             }
           ))
-          (HTTPReverseProxyRoute [ "passwords.clicks.codes" ] [ "localhost:${config.services.vaultwarden.config.ROCKET_PORT}" ])
+          (HTTPReverseProxyRoute [ "passwords.clicks.codes" ] [ "localhost:8452" ])
         ];
       };
       srv1 = {
