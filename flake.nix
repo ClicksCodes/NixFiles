@@ -38,6 +38,7 @@
               ./modules/dnsmasq.nix
               ./modules/doas.nix
               ./modules/docker.nix
+              ./modules/drivePaths.nix
               ./modules/ecryptfs.nix
               ./modules/fail2ban.nix
               ./modules/fuck.nix
@@ -54,7 +55,9 @@
               ./modules/scalpel.nix
               ./modules/ssh.nix
               ./modules/static-ip.nix
+              ./modules/syncthing.nix
               ./modules/tesseract.nix
+              ./modules/vaultwarden.nix
               sops-nix.nixosModules.sops
               {
                 users.mutableUsers = false;

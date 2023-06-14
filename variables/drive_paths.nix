@@ -1,5 +1,4 @@
 {
-  root = "/";
   Internal120SSD = {
     path = "/mnt/120InternalSSD";
     uuid = "3051c23d-143a-4344-8ad9-e0a8cf3b8a3d";

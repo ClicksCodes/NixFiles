@@ -1,11 +1,11 @@
-{ pkgs, drive_paths, lib, config, ... }: {
+{ base, pkgs, drive_paths, lib, config, ... }: {
   environment.systemPackages = with pkgs; [ vaultwarden ];
 
   services.vaultwarden.enable = true;
   services.vaultwarden.dbBackend = "postgresql";
 
-  sops.secrets = lib.pipe [ "ADMIN_TOKEN", "SMTP_PASSWORD", "YUBICO_SECRET_KEY", "HIBP_API_KEY" ] [
-    (name: {
+  sops.secrets = lib.pipe [ "ADMIN_TOKEN" "SMTP_PASSWORD" "YUBICO_SECRET_KEY" "HIBP_API_KEY" ] [
+    (map (name: {
       inherit name; value = {
       mode = "0400";
       owner = config.users.users.root.name;
@@ -13,7 +13,7 @@
       sopsFile = ../secrets/vaultwarden.json;
       format = "json";
     };
-    })
+    }))
     builtins.listToAttrs
   ];
 } // (
@@ -40,9 +40,8 @@
         INVITATIONS_ALLOWED = true;
         SIGNUPS_DOMAINS_WHITELIST = "clicks.codes,coded.codes,thecoded.prof,starrysky.fyi,hopescaramels.com,pinea.dev";
 
-        # TODO: Set folder locations for storing data.
-        RSA_KEY_FILENAME = "${drive_paths.root}/bitwarden/rsa_key";
-        ICON_CACHE_FOLDER = "${drive_paths.root}/bitwarden/icon_cache";
+        RSA_KEY_FILENAME = "${drive_paths.External1000SSD}/bitwarden/rsa_key";
+        ICON_CACHE_FOLDER = "${drive_paths.External1000SSD}/bitwarden/icon_cache";
         ATTACHMENTS_FOLDER = "${drive_paths.External4000HDD}/bitwarden/attachments";
         SENDS_FOLDER = "${drive_paths.External4000HDD}/bitwarden/sends";
         TMP_FOLDER = "${drive_paths.External4000HDD}/bitwarden/tmp";
