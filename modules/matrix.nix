@@ -44,6 +44,7 @@ lib.recursiveUpdate
       admin.enableMakeRoomAdminCommand = true;
       allowNoPrefix = true;
       protections.wordlist.words = [ ];
+      protectedRooms = [ "https://matrix.to/#/#global:coded.codes" ];
     };
 
     pantalaimon = {
