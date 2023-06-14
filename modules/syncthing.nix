@@ -6,6 +6,6 @@
 
   services.syncthing.extraOptions.gui = {
     user = "admin";
-    password = "password";
+    password = "$2y$10$nXJNERNUllFWDUrP4Io1zeJQUtiiZwUj1Js8dglDoc.SvhC9kqddm";
   };
 }
