@@ -4,7 +4,7 @@
     dnsmasq = {
       enable = true;
       settings = {
-        servers = [ "1.1.1.1" "1.0.0.1" ];
+        server = [ "1.1.1.1" "1.0.0.1" ];
         local = "/local/";
         domain = "local";
         expand-hosts = true;

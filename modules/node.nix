@@ -3,6 +3,7 @@
     nodejs_20
     nodePackages.typescript
     nodePackages.pnpm
+    yarn
     nodePackages.pm2
   ];
 }
