@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     nodejs_20
     nodePackages.typescript
-    yarn
+    nodePackages.pnpm
     nodePackages.pm2
   ];
 }
