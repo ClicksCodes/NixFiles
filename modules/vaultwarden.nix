@@ -64,15 +64,15 @@
         SMTP_SECURITY = "starttls";
         SMTP_PORT = 587;
 
-        SMTP_USERNAME="FILL_ME_IN";
-        SMTP_PASSWORD="!!SMTP_PASSWORD!!";
+        SMTP_USERNAME = "FILL_ME_IN";
+        SMTP_PASSWORD = "!!SMTP_PASSWORD!!";
 
-        REQUIRE_DEVICE_EMAIL=true;
+        REQUIRE_DEVICE_EMAIL = true;
 
 
         # YubiKey Settings
-        YUBICO_CLIENT_ID="89788";
-        YUBICO_SECRET_KEY="!!YUBICO_SECRET_KEY!!";
+        YUBICO_CLIENT_ID = "89788";
+        YUBICO_SECRET_KEY = "!!YUBICO_SECRET_KEY!!";
 
 
         # TODO: Buy a license
@@ -106,7 +106,7 @@
         in
         { DATA_FOLDER = "/var/lib/bitwarden_rs"; } // optionalAttrs (!(configEnv ? WEB_VAULT_ENABLED) || configEnv.WEB_VAULT_ENABLED == "true") {
           WEB_VAULT_FOLDER = "${cfg.webVaultPackage}/share/vaultwarden/vault";
-      } // configEnv;
+        } // configEnv;
 
       configFile = pkgs.writeText "vaultwarden.env" (concatStrings (mapAttrsToList (name: value: "${name}=${value}\n") configEnv));
     in

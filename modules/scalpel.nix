@@ -1,6 +1,8 @@
-{ lib, config, ... }: let
+{ lib, config, ... }:
+let
   cfg = config.scalpel;
-in {
+in
+{
   system.activationScripts.scalpelCreateStore.text = lib.mkForce ''
     echo "[scalpel] Ensuring existance of ${cfg.secretsDir}"
     mkdir -p ${cfg.secretsDir}
