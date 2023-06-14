@@ -73,7 +73,7 @@ let
     ];
   };
 in
-{ pkgs, lib }: {
+{ pkgs, lib, config }: {
   apps = {
     http.servers = {
       srv0 = {
@@ -279,6 +279,13 @@ in
               };
             }
           ))
+          (HTTPReverseProxyRoute [ "passwords.clicks.codes" ] [ "localhost:8452" ])
+          (HTTPReverseProxyRoute [
+            "syncthing.clicks.codes"
+            "syncthing.coded.codes"
+            "syncthing.thecoded.prof"
+            "syncthing.hopescaramels.com"
+          ] [ "localhost:8384" ])
         ];
       };
       srv1 = {

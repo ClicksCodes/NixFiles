@@ -60,7 +60,7 @@
                 users.mutableUsers = false;
               }
             ];
-            specialArgs = { base = null; };
+            specialArgs = { base = null; drive_paths = import ./variables/drive_paths.nix; };
           };
         in
         base.extendModules {

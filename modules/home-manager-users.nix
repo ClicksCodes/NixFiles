@@ -26,7 +26,7 @@ in
 } // (
   if (base != null)
   then {
-/*    users.groups = lib.mapAttrs'
+    /*    users.groups = lib.mapAttrs'
       (_: user: {
         name = user.group;
         value = { };
