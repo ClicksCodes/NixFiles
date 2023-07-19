@@ -71,6 +71,7 @@ lib.recursiveUpdate {
 
         REQUIRE_DEVICE_EMAIL = true;
 
+        IP_HEADER = "X-Forwarded-For";
 
         # YubiKey Settings
         YUBICO_CLIENT_ID = "89788";
