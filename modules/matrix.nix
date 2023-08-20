@@ -31,8 +31,19 @@ lib.recursiveUpdate
       }];
       enable_metrics = true;
       database.args.database = "synapse";
+      turn_uris = [
+
+        /* "turn:turn.coded.codes:3478?transport=udp"
+        "turn:turn.coded.codes:3478?transport=tcp"
+        "turns:turn.coded.codes:5349?transport=udp"
+        "turns:turn.coded.codes:5349?transport=tcp" */
+      ]; # Please use matrix.org turn
+      # turn_shared_secret = "!!turn_shared_secret!!";
     };
   };
+
+  networking.firewall.allowedTCPPorts = [ 3478 5349 ];
+  networking.firewall.allowedUDPPorts = [ 3478 5349 ];
 
   services.mjolnir = {
     enable = true;
@@ -62,7 +73,31 @@ lib.recursiveUpdate
     managementRoom = "#moderation-commands:coded.codes";
   };
 
+  services.coturn = {
+    enable = false;
+
+    use-auth-secret = true;
+    # static-auth-secret-file = config.sops.secrets.turn_shared_secret.path;
+
+    realm = "turn.coded.codes";
+
+    no-tcp-relay = true;
+
+    no-cli = true;
+
+    extraConfig = ''
+      external-ip=turn.coded.codes
+    '';
+  };
+
   sops.secrets = {
+    #turn_shared_secret = {
+    #  mode = "0440";
+    #  owner = "turnserver";
+    #  group = "matrix-synapse";
+    #  sopsFile = ../secrets/matrix.json;
+    #  format = "json";
+    #};
     registration_shared_secret = {
       mode = "0400";
       owner = config.users.users.root.name;
@@ -103,6 +138,8 @@ lib.recursiveUpdate
           source = toString synapse_cfgfile;
           matchers."registration_shared_secret".secret =
             config.sops.secrets.registration_shared_secret.path;
+          # matchers."turn_shared_secret".secret =
+          #   config.sops.secrets.turn_shared_secret.path;
           owner = config.users.users.matrix-synapse.name;
           group = config.users.users.matrix-synapse.group;
           mode = "0400";

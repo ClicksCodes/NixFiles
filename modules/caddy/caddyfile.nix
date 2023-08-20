@@ -344,12 +344,28 @@ in
             terminal = true;
           }
           (HTTPFileServerRoute [ "matrix.coded.codes" ] (
-            pkgs.element-web.override {
+            pkgs.schildichat-web.override {
               conf = {
                 default_server_config = lib.pipe ./coded.codes/.well-known/matrix [
                   builtins.readFile
                   builtins.fromJSON
                 ];
+                features = {
+                  feature_report_to_moderators = true;
+                  feature_latex_maths = true;
+                  feature_pinning = true;
+                  feature_mjolnir = true;
+                  feature_presence_in_room_list = true;
+                  feature_custom_themes = true;
+                  feature_dehydration = true;
+                };
+                setting_defaults = {
+                  "fallbackICEServerAllowed" = true;
+                };
+                default_theme = "dark";
+                permalink_prefix = "https://matrix.coded.codes";
+                disable_guests = true;
+                disable_3pid_login = true;
               };
             }
           ))
