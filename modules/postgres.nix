@@ -12,6 +12,7 @@
 
     ensureDatabases = [
       "vaultwarden"
+      "privatebin"
     ];
 
     ensureUsers = [
@@ -32,6 +33,12 @@
         name = "vaultwarden";
         ensurePermissions = {
           "DATABASE vaultwarden" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = "privatebin";
+        ensurePermissions = {
+          "DATABASE privatebin" = "ALL PRIVILEGES";
         };
       }
     ] ++ (map
@@ -66,6 +73,7 @@
     (lib.mkAfter (lib.pipe [
       { user = "clicks_grafana"; passwordFile = config.sops.secrets.clicks_grafana_db_password.path; }
       { user = "vaultwarden"; passwordFile = config.sops.secrets.clicks_bitwarden_db_password.path; }
+      { user = "privatebin"; passwordFile = config.sops.secrets.clicks_privatebin_db_password.path; }
     ] [
       (map (userData: ''
         $PSQL -tAc "ALTER USER ${userData.user} PASSWORD '$(cat ${userData.passwordFile})';"
@@ -77,6 +85,7 @@
   sops.secrets = lib.pipe [
     "clicks_grafana_db_password"
     "clicks_bitwarden_db_password"
+    "clicks_privatebin_db_password"
   ] [
     (map (name: {
       inherit name;

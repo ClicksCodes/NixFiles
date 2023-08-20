@@ -15,12 +15,26 @@
   inputs.scalpel.inputs.nixpkgs.follows = "nixpkgs";
   inputs.scalpel.inputs.sops-nix.follows = "sops-nix";
 
-  outputs = { self, nixpkgs, deploy-rs, home-manager, sops-nix, scalpel, ... }@inputs:
+  inputs.nixpkgs-privatebin.url = "github:e1mo/nixpkgs/privatebin";
+
+  outputs =
+    { self
+    , nixpkgs
+    , deploy-rs
+    , home-manager
+    , sops-nix
+    , scalpel
+    , nixpkgs-privatebin
+    , ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        overlays = [
+          (final: prev: { inherit (nixpkgs-privatebin.legacyPackages.${system}) privatebin pbcli; })
+        ];
       };
     in
     rec {
@@ -51,6 +65,7 @@
               ./modules/mongodb.nix
               ./modules/node.nix
               ./modules/postgres.nix
+              ./modules/privatebin.nix
               ./modules/samba.nix
               ./modules/scalpel.nix
               ./modules/ssh.nix
@@ -59,6 +74,7 @@
               ./modules/tesseract.nix
               ./modules/vaultwarden.nix
               sops-nix.nixosModules.sops
+              "${nixpkgs-privatebin}/nixos/modules/services/web-apps/privatebin.nix"
               {
                 users.mutableUsers = false;
               }

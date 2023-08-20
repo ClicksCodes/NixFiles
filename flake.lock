@@ -91,6 +91,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-privatebin": {
+      "locked": {
+        "lastModified": 1691328775,
+        "narHash": "sha256-nz7Myc/3sW7/tN1QDYKrmHnH5f5eGdbcFt1FRDstavk=",
+        "owner": "e1mo",
+        "repo": "nixpkgs",
+        "rev": "e1b0550bc7498d61ba95bcd089d62e256ef1677a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "e1mo",
+        "ref": "privatebin",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1685758009,
@@ -129,6 +145,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-privatebin": "nixpkgs-privatebin",
         "scalpel": "scalpel",
         "sops-nix": "sops-nix"
       }

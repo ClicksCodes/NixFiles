@@ -18,6 +18,80 @@ let
     match = [{ host = hosts; }];
     terminal = true;
   };
+  PHPRoute = hosts: root: socket: {
+    handle = [
+      {
+        handler = "subroute";
+        routes = [
+          {
+            handle = [
+              {
+                handler = "vars";
+                inherit root;
+              }
+            ];
+          }
+          {
+            handle = [
+              {
+                handler = "static_response";
+                headers.Location = [ "{http.request.orig_uri.path}/" ];
+                status_code = 307;
+              }
+            ];
+            match = [
+              {
+                file.try_files = [ "{http.request.uri.path}/index.php" ];
+                not = [ { path = ["*/"]; } ];
+              }
+            ];
+          }
+          {
+            handle = [
+              {
+                handler = "rewrite";
+                uri = "{http.matchers.file.relative}";
+              }
+            ];
+            match = [
+              {
+                file = {
+                  split_path = [ ".php" ];
+                  try_files = [
+                    "{http.request.uri.path}"
+                    "{http.request.uri.path}/index.php"
+                    "index.php"
+                  ];
+                };
+              }
+            ];
+          }
+          {
+            handle = [
+              {
+                handler = "reverse_proxy";
+                transport = {
+                  protocol = "fastcgi";
+                  split_path = [".php"];
+                };
+                upstreams = [{ dial = socket; }];
+              }
+            ];
+            match = [{ path = ["*.php"]; }];
+          }
+          {
+            handle = [
+              {
+                handler = "file_server";
+              }
+            ];
+          }
+        ];
+      }
+    ];
+    match = [{ host = hosts; }];
+    terminal = true;
+  };
   HTTPRedirectRoute = hosts: goto: {
     handle = [
       {
@@ -286,6 +360,11 @@ in
             "syncthing.thecoded.prof"
             "syncthing.hopescaramels.com"
           ] [ "localhost:8384" ])
+          (PHPRoute
+            [ "paste.clicks.codes" "paste.coded.codes" ]
+            "${pkgs.privatebin}/share/privatebin"
+            "unix/${config.services.phpfpm.pools.privatebin.socket}"
+          )
         ];
       };
       srv1 = {
