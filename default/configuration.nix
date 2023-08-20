@@ -70,7 +70,9 @@
     extraGroups = [ "wheel" ];
 
     openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDNCOdHSYGKQj8QMQKuWsnTUCGpKNwQa+/15JVD7kxO4VxI0mavpoB6EIwVF881s2DYqRNv2UQIKbw/tZ8qnTbk8HvzvHBjuJE9okAfelphkiH60mM+FzRZrUaDFLKzTBy1fBAk1O35vNaXJS3qDdr2wQOU9D10Ulvq1RBRSVe4uWbZJUWbac/zq2ghRfcHEavhGVIqI7JRcBy8P721bFULs5lxEUMZM2MBavg2wvbFc41CXZSAmK3M+wS2WPdSA8GxbiMgcPhiArRfqJbO/v3NUGIHQnTRK3kEpblVLz9ULpTo0Kl4pcTgIGI0S3zSJIV2VXERnzkjEgNn8gjDVBCZEXyFlGlPNV1DBd+NZwcqfAXsUHGkOs+GPGm93QVsbPoqZ49N5BJg1SZCE7KWfQAnkWE/ki7Z7+BJAWbZsoc7KSz7bvy5jr6yfIzwmy4mAgiVZFfCDRI3S3oEbhqW8TWZatEPSjMgDLsh3AgYdzjYQ1p6IM91wvD+XxB0/8+LaL0= minion@python"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIteIdlZv52nUDxW2SUsoJ2NZi/w9j1NZwuHanQ/o/DuAAAAHnNzaDpjb2xsYWJvcmFfeXViaWtleV9yZXNpZGVudA== collabora_yubikey_resident"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJRzQbQjXFpHKtt8lpNKmoNx57+EJ/z3wnKOn3/LjM6cAAAAFXNzaDppeXViaWtleV9yZXNpZGVudA== iyubikey_resident"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIOhzJ0p9bFRSURUjV05rrt5jCbxPXke7juNbEC9ZJXS/AAAAGXNzaDp0aW55X3l1YmlrZXlfcmVzaWRlbnQ= tiny_yubikey_resident"
     ];
   };
   users.users.coded = {
