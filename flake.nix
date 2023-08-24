@@ -48,6 +48,7 @@
               ./modules/cache.nix
               ./modules/caddy.nix
               ./modules/clamav.nix
+              ./modules/cloudflare-ddns.nix
               ./modules/dmarc.nix
               ./modules/dnsmasq.nix
               ./modules/doas.nix
