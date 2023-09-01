@@ -2,6 +2,7 @@
   description = "A flake to deploy and configure Clicks' NixOS server";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+  inputs.nixpkgs-clicksforms.url = "github:nixos/nixpkgs/nixos-22.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
   inputs.home-manager.url = "github:nix-community/home-manager/release-23.05";
@@ -126,6 +127,7 @@
                       }
                       "${./services}/${service}"
                     ];
+                    extraSpecialArgs = { inherit (inputs) nixpkgs-clicksforms; inherit system; };
                   });
             };
           in
@@ -173,6 +175,10 @@
         );
         hostname = "clicks";
         profilesOrder = [ "system" ];
+      };
+
+      devShells.x86_64-linux.default = pkgs.mkShell {
+        packages = [ pkgs.deploy-rs ];
       };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
