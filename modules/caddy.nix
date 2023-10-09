@@ -1,5 +1,6 @@
 { base, config, pkgs, lib, ... }: lib.recursiveUpdate
 {
+  services.nginx.enable = false; # PrivateBin, nextcloud etc. attempts to enable nginx but we already use caddy
   services.caddy.enable = true;
   services.caddy.configFile = lib.pipe ./caddy/caddyfile.nix [
     import

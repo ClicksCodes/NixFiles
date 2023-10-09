@@ -14,6 +14,7 @@
       "vaultwarden"
       "privatebin"
       "keycloak"
+      "nextcloud"
     ];
 
     ensureUsers = [
@@ -46,6 +47,12 @@
         name = "privatebin";
         ensurePermissions = {
           "DATABASE privatebin" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = "nextcloud";
+        ensurePermissions = {
+          "DATABASE nextcloud" = "ALL PRIVILEGES";
         };
       }
     ] ++ (map
@@ -82,6 +89,7 @@
       { user = "keycloak"; passwordFile = config.sops.secrets.clicks_keycloak_db_password.path; }
       { user = "vaultwarden"; passwordFile = config.sops.secrets.clicks_bitwarden_db_password.path; }
       { user = "privatebin"; passwordFile = config.sops.secrets.clicks_privatebin_db_password.path; }
+      { user = "nextcloud"; passwordFile = config.sops.secrets.clicks_nextcloud_db_password.path; }
     ] [
       (map (userData: ''
         $PSQL -tAc "ALTER USER ${userData.user} PASSWORD '$(cat ${userData.passwordFile})';"
@@ -95,6 +103,7 @@
     "clicks_keycloak_db_password"
     "clicks_bitwarden_db_password"
     "clicks_privatebin_db_password"
+    "clicks_nextcloud_db_password"
   ] [
     (map (name: {
       inherit name;
