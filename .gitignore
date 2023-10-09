@@ -1,2 +1,3 @@
 secrets/.decrypted~*
+secrets/*.tmp.*
 .direnv/
