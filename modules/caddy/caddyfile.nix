@@ -377,6 +377,10 @@ in
             "syncthing.thecoded.prof"
             "syncthing.hopescaramels.com"
           ] [ "localhost:8384" ])
+          (HTTPReverseProxyRoute [
+            "git.clicks.codes"
+            "gerrit.clicks.codes"
+          ] [ "127.0.0.255:1000" ])
           (PHPRoute
             [ "paste.clicks.codes" "paste.coded.codes" ]
             "${pkgs.privatebin}/share/privatebin"

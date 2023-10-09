@@ -58,6 +58,7 @@
               ./modules/ecryptfs.nix
               ./modules/fail2ban.nix
               ./modules/fuck.nix
+              ./modules/gerrit.nix
               ./modules/git.nix
               ./modules/grafana.nix
               ./modules/home-manager-users.nix
@@ -82,7 +83,7 @@
                 users.mutableUsers = false;
               }
             ];
-            specialArgs = { base = null; drive_paths = import ./variables/drive_paths.nix; };
+            specialArgs = { base = null; drive_paths = import ./variables/drive_paths.nix; inherit system; };
           };
         in
         base.extendModules {
