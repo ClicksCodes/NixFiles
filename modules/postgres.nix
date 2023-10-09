@@ -13,6 +13,7 @@
     ensureDatabases = [
       "vaultwarden"
       "privatebin"
+      "keycloak"
     ];
 
     ensureUsers = [
@@ -27,6 +28,12 @@
         name = "synapse";
         ensurePermissions = {
           "DATABASE synapse" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = "keycloak";
+        ensurePermissions = {
+          "DATABASE keycloak" = "ALL PRIVILEGES";
         };
       }
       {
@@ -72,6 +79,7 @@
     )
     (lib.mkAfter (lib.pipe [
       { user = "clicks_grafana"; passwordFile = config.sops.secrets.clicks_grafana_db_password.path; }
+      { user = "keycloak"; passwordFile = config.sops.secrets.clicks_keycloak_db_password.path; }
       { user = "vaultwarden"; passwordFile = config.sops.secrets.clicks_bitwarden_db_password.path; }
       { user = "privatebin"; passwordFile = config.sops.secrets.clicks_privatebin_db_password.path; }
     ] [
@@ -84,6 +92,7 @@
 
   sops.secrets = lib.pipe [
     "clicks_grafana_db_password"
+    "clicks_keycloak_db_password"
     "clicks_bitwarden_db_password"
     "clicks_privatebin_db_password"
   ] [

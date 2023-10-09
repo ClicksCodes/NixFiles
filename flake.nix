@@ -61,6 +61,7 @@
               ./modules/git.nix
               ./modules/grafana.nix
               ./modules/home-manager-users.nix
+              ./modules/keycloak.nix
               ./modules/kitty.nix
               ./modules/loginctl-linger.nix
               ./modules/matrix.nix
