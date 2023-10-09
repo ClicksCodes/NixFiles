@@ -14,6 +14,8 @@ lib.recursiveUpdate
       auto_join_rooms = [ "#general:${server_name}" ];
       enable_registration = true;
       registration_requires_token = true;
+      allow_public_rooms_over_federation = true;
+      allow_device_name_lookup_over_federation = true;
       registration_shared_secret = "!!registration_shared_secret!!";
       public_baseurl = "https://matrix-backend.coded.codes/";
       max_upload_size = "100M";
@@ -39,6 +41,31 @@ lib.recursiveUpdate
         "turns:turn.coded.codes:5349?transport=tcp" */
       ]; # Please use matrix.org turn
       # turn_shared_secret = "!!turn_shared_secret!!";
+
+      log_config = lib.pipe {
+        version = 1;
+        formatters = {
+          precise = {
+            format =
+              "%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(request)s - %(message)s";
+          };
+        };
+        handlers = {
+          console = {
+            class = "logging.StreamHandler";
+            formatter = "precise";
+          };
+        };
+        loggers = { "synapse.storage.SQL" = { level = "WARNING"; }; };
+        root = {
+          level = "ERROR";
+          handlers = [ "console" ];
+        };
+        "disable_existing_loggers" = false;
+      } [
+        builtins.toJSON
+        (builtins.toFile "logcfg.yaml")
+      ];
     };
   };
 
