@@ -38,6 +38,10 @@
         extraTrustedDomains = [ "nextcloud.clicks.codes" "docs.clicks.codes" ];
     };
 
+    services.nextcloud.extraConfig = {
+        social_login_auto_redirect = true;
+    };
+
     services.nextcloud.extraApps = {
         sociallogin = pkgs.fetchNextcloudApp {
             url = "https://github.com/zorn-v/nextcloud-social-login/releases/download/v5.5.3/release.tar.gz";
