@@ -1,7 +1,6 @@
 { config, lib, base, ... }:
 lib.recursiveUpdate
 {
-  services.nginx.enable = false; # PrivateBin attempts to enable nginx but we already use caddy
   services.privatebin = {
     enable = true;
     settings = {
@@ -17,7 +16,7 @@ lib.recursiveUpdate
 
         info = ''Powered by <a href="https://privatebin.info/">PrivateBin</a>. Provided as a service free-of-charge by Clicks. Come chat with us <a href="https://matrix.to/#/#global:coded.codes"> on Matrix</a>'';
         notice = "This service has no guarantee of uptime, and pastes are not backed up. If you need somewhere to host the last words of your wise old grandfather for time immemorial this is not the place.";
-        
+
         langaugeselection = true;
       };
 

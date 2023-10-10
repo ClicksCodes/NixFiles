@@ -66,6 +66,7 @@
               ./modules/loginctl-linger.nix
               ./modules/matrix.nix
               ./modules/mongodb.nix
+              ./modules/nextcloud.nix
               ./modules/node.nix
               ./modules/postgres.nix
               ./modules/privatebin.nix

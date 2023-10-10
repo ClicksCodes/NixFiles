@@ -382,6 +382,11 @@ in
             "${pkgs.privatebin}/share/privatebin"
             "unix/${config.services.phpfpm.pools.privatebin.socket}"
           )
+          (PHPRoute
+            [ "cloud.clicks.codes" "nextcloud.clicks.codes" "docs.clicks.codes" ]
+            "${config.services.nextcloud.package}"
+            "unix/${config.services.phpfpm.pools.nextcloud.socket}"
+          )
         ];
       };
       srv1 = {
