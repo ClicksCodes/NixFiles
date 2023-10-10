@@ -370,6 +370,7 @@ in
             }
           ))
           (HTTPReverseProxyRoute [ "passwords.clicks.codes" ] [ "localhost:8452" ])
+          (HTTPReverseProxyRoute [ "login.clicks.codes" ] [ "localhost:9083" ])
           (HTTPReverseProxyRoute [
             "syncthing.clicks.codes"
             "syncthing.coded.codes"
