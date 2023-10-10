@@ -38,7 +38,7 @@
         extraTrustedDomains = [ "nextcloud.clicks.codes" "docs.clicks.codes" ];
     };
 
-    services.nextcloud.extraConfig = {
+    services.nextcloud.extraOptions = {
         social_login_auto_redirect = true;
     };
 
