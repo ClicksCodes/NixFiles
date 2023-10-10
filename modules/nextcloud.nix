@@ -38,6 +38,13 @@
         extraTrustedDomains = [ "nextcloud.clicks.codes" "docs.clicks.codes" ];
     };
 
+    services.nextcloud.extraApps = {
+        sociallogin = pkgs.fetchNextcloudApp {
+            url = "https://github.com/zorn-v/nextcloud-social-login/releases/download/v5.5.3/release.tar.gz";
+            sha256 = "sha256-96/wtK7t23fXVRcntDONjgb5bYtZuaNZzbvQCa5Gsj4=";
+        };
+    };
+
     sops.secrets.nextcloud_admin_password = {
         mode = "0600";
         owner = config.users.users.nextcloud.name;
