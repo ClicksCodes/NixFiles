@@ -133,7 +133,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 25 465 587 110 995 143 993 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 25 465 587 110 995 143 993 29418 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;

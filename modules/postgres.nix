@@ -12,6 +12,7 @@
 
     ensureDatabases = [
       "vaultwarden"
+      "gerrit"
       "privatebin"
       "keycloak"
       "nextcloud"
@@ -35,6 +36,12 @@
         name = "keycloak";
         ensurePermissions = {
           "DATABASE keycloak" = "ALL PRIVILEGES";
+        };
+      }
+      {
+        name = "gerrit";
+        ensurePermissions = {
+          "DATABASE gerrit" = "ALL PRIVILEGES";
         };
       }
       {
@@ -87,6 +94,7 @@
     (lib.mkAfter (lib.pipe [
       { user = "clicks_grafana"; passwordFile = config.sops.secrets.clicks_grafana_db_password.path; }
       { user = "keycloak"; passwordFile = config.sops.secrets.clicks_keycloak_db_password.path; }
+      { user = "gerrit"; passwordFile = config.sops.secrets.clicks_gerrit_db_password.path; }
       { user = "vaultwarden"; passwordFile = config.sops.secrets.clicks_bitwarden_db_password.path; }
       { user = "privatebin"; passwordFile = config.sops.secrets.clicks_privatebin_db_password.path; }
       { user = "nextcloud"; passwordFile = config.sops.secrets.clicks_nextcloud_db_password.path; }
@@ -101,6 +109,7 @@
   sops.secrets = lib.pipe [
     "clicks_grafana_db_password"
     "clicks_keycloak_db_password"
+    "clicks_gerrit_db_password"
     "clicks_bitwarden_db_password"
     "clicks_privatebin_db_password"
     "clicks_nextcloud_db_password"
