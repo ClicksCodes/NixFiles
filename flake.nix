@@ -18,6 +18,8 @@
 
   inputs.nixpkgs-privatebin.url = "github:e1mo/nixpkgs/privatebin";
 
+  inputs.helpers.url = "git+https://git.clicks.codes/Clicks/NixHelpers";
+
   outputs =
     { self
     , nixpkgs
@@ -26,6 +28,7 @@
     , sops-nix
     , scalpel
     , nixpkgs-privatebin
+    , helpers
     , ...
     }@inputs:
     let
@@ -47,7 +50,6 @@
               ./default/configuration.nix
               ./default/hardware-configuration.nix
               ./modules/cache.nix
-              ./modules/caddy.nix
               ./modules/clamav.nix
               ./modules/cloudflare-ddns.nix
               ./modules/dmarc.nix
@@ -57,7 +59,6 @@
               ./modules/drivePaths.nix
               ./modules/ecryptfs.nix
               ./modules/fail2ban.nix
-              ./modules/fuck.nix
               ./modules/gerrit.nix
               ./modules/git.nix
               ./modules/grafana.nix
@@ -67,7 +68,10 @@
               ./modules/loginctl-linger.nix
               ./modules/matrix.nix
               ./modules/mongodb.nix
+              ./modules/networking.nix
               ./modules/nextcloud.nix
+              ./modules/nginx-routes.nix
+              ./modules/nginx.nix
               ./modules/node.nix
               ./modules/postgres.nix
               ./modules/privatebin.nix
@@ -84,7 +88,12 @@
                 users.mutableUsers = false;
               }
             ];
-            specialArgs = { base = null; drive_paths = import ./variables/drive_paths.nix; inherit system; };
+            specialArgs = {
+              base = null;
+              drive_paths = import ./variables/drive_paths.nix;
+              inherit system;
+              helpers = helpers.helpers { inherit pkgs; };
+            };
           };
         in
         base.extendModules {
@@ -184,6 +193,6 @@
         packages = [ pkgs.deploy-rs ];
       };
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
 }

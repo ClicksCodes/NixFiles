@@ -12,7 +12,7 @@
     mode = "0600";
     owner = config.users.users.root.name;
     group = config.users.users.root.group;
-    sopsFile = ../secrets/cloudflare.env.bin;
+    sopsFile = ../secrets/cloudflare-ddns.env.bin;
     format = "binary";
   };
 }

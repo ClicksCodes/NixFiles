@@ -1,0 +1,3 @@
+[submodule "helpers"]
+	path = helpers
+	url = https://git.clicks.codes/Clicks/NixHelpers

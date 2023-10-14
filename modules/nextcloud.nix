@@ -16,7 +16,7 @@
 
     services.nextcloud.enable = true;
     services.nextcloud.config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
-    services.nextcloud.hostName = "cloud.clicks.codes";
+    services.nextcloud.hostName = "nextcloud.clicks.codes";
     services.nextcloud.package = pkgs.nextcloud27;
     services.nextcloud.poolSettings = {
         pm = "dynamic";
@@ -46,6 +46,14 @@
         sociallogin = pkgs.fetchNextcloudApp {
             url = "https://github.com/zorn-v/nextcloud-social-login/releases/download/v5.5.3/release.tar.gz";
             sha256 = "sha256-96/wtK7t23fXVRcntDONjgb5bYtZuaNZzbvQCa5Gsj4=";
+        };
+        richdocumentscode = pkgs.fetchNextcloudApp {
+            url = "redacted";
+            sha256 = "sha256-XYtjBZCIQ6+PL3BNLSZfJTgLLpOyphzR5HOAwI7bWx0=";
+        };
+        richdocuments = pkgs.fetchNextcloudApp {
+            url = "https://github.com/nextcloud-releases/richdocuments/releases/download/v8.2.0/richdocuments-v8.2.0.tar.gz";
+            sha256 = "sha256-PKw7FXSWvden2+6XjnUDOvbTF71slgeTF/ktS/l2+Dk=";
         };
     };
 

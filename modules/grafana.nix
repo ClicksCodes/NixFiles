@@ -1,4 +1,4 @@
-{ lib, config, base, pkgs, ... }:
+{ lib, config, base, pkgs, helpers, ... }:
 lib.recursiveUpdate
 {
   services.grafana = {

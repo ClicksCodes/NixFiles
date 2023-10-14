@@ -6,7 +6,7 @@ lib.recursiveUpdate
     settings = {
       main = {
         name = "Clicks Minute Paste";
-        basepath = "https://paste.clicks.codes/";
+        basepath = "https://privatebin.clicks.codes/";
         opendiscussion = true;
         fileupload = true;
 
@@ -18,6 +18,11 @@ lib.recursiveUpdate
         notice = "This service has no guarantee of uptime, and pastes are not backed up. If you need somewhere to host the last words of your wise old grandfather for time immemorial this is not the place.";
 
         langaugeselection = true;
+      };
+
+      nginx = {
+        serverName = "privatebin.clicks.codes";
+        enableACME = true;
       };
 
       expire.default = "1month";
