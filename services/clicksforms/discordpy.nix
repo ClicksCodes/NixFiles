@@ -1,13 +1,5 @@
-{ lib
-, aiohttp
-, buildPythonPackage
-, fetchFromGitHub
-, libopus
-, pynacl
-, pythonOlder
-, withVoice ? true
-, ffmpeg
-}:
+{ lib, aiohttp, buildPythonPackage, fetchFromGitHub, libopus, pynacl
+, pythonOlder, withVoice ? true, ffmpeg }:
 
 buildPythonPackage rec {
   pname = "discord.py";
@@ -23,13 +15,8 @@ buildPythonPackage rec {
     hash = "sha256-Rh3gijm67LVyOaliP7w3YwKviKydnxXvu4snNrM5H1c=";
   };
 
-  propagatedBuildInputs = [
-    aiohttp
-  ] ++ lib.optionals withVoice [
-    libopus
-    pynacl
-    ffmpeg
-  ];
+  propagatedBuildInputs = [ aiohttp ]
+    ++ lib.optionals withVoice [ libopus pynacl ffmpeg ];
 
   patchPhase = ''
     substituteInPlace "discord/opus.py" \
@@ -56,7 +43,8 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "Python wrapper for the Discord API";
     homepage = "https://discordpy.rtfd.org/";
-    changelog = "https://github.com/Rapptz/discord.py/blob/v${version}/docs/whats_new.rst";
+    changelog =
+      "https://github.com/Rapptz/discord.py/blob/v${version}/docs/whats_new.rst";
     license = licenses.mit;
     maintainers = with maintainers; [ minion3665 ];
   };

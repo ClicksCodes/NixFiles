@@ -1,7 +1,7 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; let
-    unlock-database-script = writeScriptBin "unlock-database-encryption"
-      ''
+  environment.systemPackages = with pkgs;
+    let
+      unlock-database-script = writeScriptBin "unlock-database-encryption" ''
         if [ $UID -ne 0 ]; then
           echo "unlock-database-encryption must be run as root"
           exit 1
@@ -12,10 +12,5 @@
 
         mount -i -t ecryptfs /var/db/.mongodb-encrypted/ /var/db/mongodb -o ecryptfs_sig=$ECRYPTFS_SIG,ecryptfs_fnek_sig=$ECRYPTFS_SIG,ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_unlink_sigs
       '';
-  in
-  [
-    ecryptfs
-    keyutils
-    unlock-database-script
-  ];
+    in [ ecryptfs keyutils unlock-database-script ];
 }

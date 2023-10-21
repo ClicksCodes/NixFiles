@@ -63,8 +63,7 @@ let
       go mod edit -replace github.com/caddy-dns/cloudflare=../cloudflare
     '';
   };
-in
-buildGoModule {
+in buildGoModule {
   name = "caddy-with-plugins";
 
   src = combinedSrc;

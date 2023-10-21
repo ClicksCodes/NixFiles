@@ -6,10 +6,7 @@
     group = config.users.groups.clicks.name;
     shell = pkgs.bashInteractive;
   };
-  sops.secrets = lib.pipe [
-    "imap_password"
-    "maxmind_license_key"
-  ] [
+  sops.secrets = lib.pipe [ "imap_password" "maxmind_license_key" ] [
     (map (name: {
       inherit name;
       value = {

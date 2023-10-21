@@ -1,3 +1,1 @@
-{ pkgs, ... }: {
-  environment.systemPackages = [ pkgs.tesseract5 ];
-}
+{ pkgs, ... }: { environment.systemPackages = [ pkgs.tesseract5 ]; }

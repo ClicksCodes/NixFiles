@@ -15,11 +15,14 @@ let
 
   dataDir = "/var/lib/systemd/linger";
 
-  lingeringUsers = map (u: u.name) (attrValues (flip filterAttrs config.users.users (n: u: u.linger)));
+  lingeringUsers = map (u: u.name)
+    (attrValues (flip filterAttrs config.users.users (n: u: u.linger)));
 
-  lingeringUsersFile = builtins.toFile "lingering-users"
-    (concatStrings (map (s: "${s}\n")
-      (sort (a: b: a < b) lingeringUsers))); # this sorting is important for `comm` to work correctly
+  lingeringUsersFile = builtins.toFile "lingering-users" (concatStrings (map
+    (s: ''
+      ${s}
+    '') (sort (a: b: a < b)
+      lingeringUsers))); # this sorting is important for `comm` to work correctly
 
   updateLingering = ''
     if [ -e ${dataDir} ] ; then
@@ -31,20 +34,16 @@ let
     fi
   '';
 
-  userOptions = {
-    options.linger = mkEnableOption "Lingering for the user";
-  };
+  userOptions = { options.linger = mkEnableOption "Lingering for the user"; };
 
-in
-
-{
+in {
   options = {
-    users.users = mkOption {
-      type = with types; attrsOf (submodule userOptions);
-    };
+    users.users =
+      mkOption { type = with types; attrsOf (submodule userOptions); };
   };
 
   config = {
-    system.activationScripts.update-lingering = stringAfter [ "users" ] updateLingering;
+    system.activationScripts.update-lingering =
+      stringAfter [ "users" ] updateLingering;
   };
 }

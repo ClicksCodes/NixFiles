@@ -7,5 +7,6 @@
     sudo.enable = false;
   };
 
-  environment.shellAliases.sudo = "${config.security.wrapperDir}/${config.security.wrappers.doas.program}";
+  environment.shellAliases.sudo =
+    "${config.security.wrapperDir}/${config.security.wrappers.doas.program}";
 }

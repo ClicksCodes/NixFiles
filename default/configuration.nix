@@ -36,9 +36,6 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
-
-
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = {
@@ -133,7 +130,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 25 465 587 110 995 143 993 29418 ];
+  networking.firewall.allowedTCPPorts =
+    [ 80 443 25 465 587 110 995 143 993 29418 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
@@ -141,7 +139,7 @@
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
-  /* system.copySystemConfiguration = true; */
+  # system.copySystemConfiguration = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

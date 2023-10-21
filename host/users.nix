@@ -1,23 +1,32 @@
 { pkgs, ... }:
 let
-  createUser = { username, realname, founder = false, sudo = false, ... }: {
+  createUser = { username, realname, founder ? false, sudo ? false, ... }: {
     description = realname;
-    extraGroups = (
-      (if founder then [ "founder" ] else [ ]) ++
-      (if founder || sudo then [ "wheel" ] else [ ])
-    );
+    extraGroups = ((if founder then [ "founder" ] else [ ])
+      ++ (if founder || sudo then [ "wheel" ] else [ ]));
     isNormalUser = true;
     openssh.authorizedKeys.keyFiles = [ "./sshKeys/${username}" ];
   };
 
   users = {
-    "coded" = { realname = "Sam"; founder = true; };
-    "minion" = { realname = "Skyler"; founder = true; };
-    "pineapplefan" = { realname = "Ash"; founder = true; };
-    "eek" = { realname = "Nexus"; sudo = true; };
+    "coded" = {
+      realname = "Sam";
+      founder = true;
+    };
+    "minion" = {
+      realname = "Skyler";
+      founder = true;
+    };
+    "pineapplefan" = {
+      realname = "Ash";
+      founder = true;
+    };
+    "eek" = {
+      realname = "Nexus";
+      sudo = true;
+    };
   };
-in
-{
+in {
   users = {
     mutableUsers = false;
     motd = ''
@@ -27,7 +36,9 @@ in
       "${builtins.readFile ./texts/MOTD}"
     '';
     defaultUserShell = pkgs.zsh;
-    users = builtins.mapAttrs (name: value: createUser { username = name; } // value) users;
+    users =
+      builtins.mapAttrs (name: value: createUser { username = name; } // value)
+      users;
     groups = { };
   };
 }

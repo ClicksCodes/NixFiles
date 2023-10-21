@@ -1,6 +1,5 @@
 { config, lib, pkgs, helpers, base, ... }:
-lib.recursiveUpdate
-{
+lib.recursiveUpdate {
   options.clicks = {
     nginx = {
       services = lib.mkOption {
@@ -14,33 +13,25 @@ lib.recursiveUpdate
                 type = let
                   validServiceTypes = {
                     "redirect" = {
-                      to = ["string" str];
-                      permanent = ["bool" bool];
+                      to = [ "string" str ];
+                      permanent = [ "bool" bool ];
                     };
-                    "reverseproxy" = {
-                      to = ["string" str];
-                    };
+                    "reverseproxy" = { to = [ "string" str ]; };
                     "php" = {
-                      root = ["string" str];
-                      socket = ["string" str];
+                      root = [ "string" str ];
+                      socket = [ "string" str ];
                     };
                     "directory" = {
-                      private = ["bool" bool];
-                      root = ["string" str];
+                      private = [ "bool" bool ];
+                      root = [ "string" str ];
                     };
-                    "file" = {
-                      path = ["string" str];
-                    };
+                    "file" = { path = [ "string" str ]; };
                     "path" = {
-                      path = ["string" str];
-                      service = ["set" serviceType];
+                      path = [ "string" str ];
+                      service = [ "set" serviceType ];
                     };
-                    "compose" = {
-                      services = ["list" (listOf serviceType)];
-                    };
-                    "status" = {
-                      statusCode = ["int" int];
-                    };
+                    "compose" = { services = [ "list" (listOf serviceType) ]; };
+                    "status" = { statusCode = [ "int" int ]; };
                   };
 
                   serviceType = mkOptionType {
@@ -50,25 +41,36 @@ lib.recursiveUpdate
                     descriptionClass = "noun";
 
                     check = (x:
-                      if (builtins.typeOf x) != "set"
-                      then lib.warn "clicks nginx services must be sets but ${x} is not a set" false
-                      else if !(builtins.hasAttr "type" x)
-                      then lib.warn "clicks nginx services must have a type attribute but ${x} does not" false
-                      else if !(builtins.hasAttr x.type validServiceTypes)
-                      then lib.warn "clicks nginx services must have a valid type, but ${x.type} is not one" false
-                      else (let
-                        optionTypes =
-                          (builtins.mapAttrs (n: o: builtins.elemAt o 0) validServiceTypes.${x.type})
-                          // { type = "string"; };
-                      in (lib.pipe x [
-                        (builtins.mapAttrs (n: o: (builtins.hasAttr n optionTypes) && optionTypes.${n} == (builtins.typeOf o)))
-                        lib.attrValues
-                        (builtins.all (x: x))
-                      ]) && (lib.pipe optionTypes [
-                        (builtins.mapAttrs (n: _: builtins.hasAttr n x))
-                        lib.attrValues
-                        (builtins.all (x: x))
-                      ] )));
+                      if (builtins.typeOf x) != "set" then
+                        lib.warn
+                        "clicks nginx services must be sets but ${x} is not a set"
+                        false
+                      else if !(builtins.hasAttr "type" x) then
+                        lib.warn
+                        "clicks nginx services must have a type attribute but ${x} does not"
+                        false
+                      else if !(builtins.hasAttr x.type validServiceTypes) then
+                        lib.warn
+                        "clicks nginx services must have a valid type, but ${x.type} is not one"
+                        false
+                      else
+                        (let
+                          optionTypes =
+                            (builtins.mapAttrs (n: o: builtins.elemAt o 0)
+                              validServiceTypes.${x.type}) // {
+                                type = "string";
+                              };
+                        in (lib.pipe x [
+                          (builtins.mapAttrs (n: o:
+                            (builtins.hasAttr n optionTypes) && optionTypes.${n}
+                            == (builtins.typeOf o)))
+                          lib.attrValues
+                          (builtins.all (x: x))
+                        ]) && (lib.pipe optionTypes [
+                          (builtins.mapAttrs (n: _: builtins.hasAttr n x))
+                          lib.attrValues
+                          (builtins.all (x: x))
+                        ])));
                   };
                 in serviceType;
               };
@@ -116,13 +118,14 @@ lib.recursiveUpdate
         default = [ ];
       };
       streams = lib.mkOption {
-        type = with lib.types; listOf (submodule {
-          options = {
-            internal = lib.mkOption { type = str; };
-            external = lib.mkOption { type = port; };
-            protocol = lib.mkOption { type = strMatching "^(tcp|udp)$"; };
-          };
-        });
+        type = with lib.types;
+          listOf (submodule {
+            options = {
+              internal = lib.mkOption { type = str; };
+              external = lib.mkOption { type = port; };
+              protocol = lib.mkOption { type = strMatching "^(tcp|udp)$"; };
+            };
+          });
         example = lib.literalExpression ''
           with helpers.nginx; [
             (Stream 1001 "generic:1002" "tcp")
@@ -151,7 +154,9 @@ lib.recursiveUpdate
 
       streamConfig = builtins.concatStringsSep "\n" (map (stream: ''
         server {
-            listen ${builtins.toString stream.external}${lib.optionalString (stream.protocol == "udp") " udp"};
+            listen ${builtins.toString stream.external}${
+              lib.optionalString (stream.protocol == "udp") " udp"
+            };
             proxy_pass ${builtins.toString stream.internal};
         }
       '') config.clicks.nginx.streams);
@@ -180,8 +185,10 @@ lib.recursiveUpdate
       format = "binary";
     };
   };
-} (
-  if base != null
-  then {
-    config.security.acme.certs = builtins.mapAttrs (_: v: { webroot = null; dnsProvider = "cloudflare"; }) base.config.security.acme.certs;
-  } else {})
+} (if base != null then {
+  config.security.acme.certs = builtins.mapAttrs (_: v: {
+    webroot = null;
+    dnsProvider = "cloudflare";
+  }) base.config.security.acme.certs;
+} else
+  { })

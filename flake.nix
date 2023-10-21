@@ -20,94 +20,79 @@
 
   inputs.helpers.url = "git+https://git.clicks.codes/Clicks/NixHelpers";
 
-  outputs =
-    { self
-    , nixpkgs
-    , deploy-rs
-    , home-manager
-    , sops-nix
-    , scalpel
-    , nixpkgs-privatebin
-    , helpers
-    , ...
-    }@inputs:
+  outputs = { self, nixpkgs, deploy-rs, home-manager, sops-nix, scalpel
+    , nixpkgs-privatebin, helpers, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          (final: prev: { inherit (nixpkgs-privatebin.legacyPackages.${system}) privatebin pbcli; })
+          (final: prev: {
+            inherit (nixpkgs-privatebin.legacyPackages.${system})
+              privatebin pbcli;
+          })
         ];
       };
-    in
-    rec {
-      nixosConfigurations.clicks =
-        let
-          base = nixpkgs.lib.nixosSystem {
-            inherit system pkgs;
-            modules = [
-              ./default/configuration.nix
-              ./default/hardware-configuration.nix
-              ./modules/cache.nix
-              ./modules/clamav.nix
-              ./modules/cloudflare-ddns.nix
-              ./modules/dmarc.nix
-              ./modules/dnsmasq.nix
-              ./modules/doas.nix
-              ./modules/docker.nix
-              ./modules/drivePaths.nix
-              ./modules/ecryptfs.nix
-              ./modules/fail2ban.nix
-              ./modules/gerrit.nix
-              ./modules/git.nix
-              ./modules/grafana.nix
-              ./modules/home-manager-users.nix
-              ./modules/keycloak.nix
-              ./modules/kitty.nix
-              ./modules/loginctl-linger.nix
-              ./modules/matrix.nix
-              ./modules/mongodb.nix
-              ./modules/networking.nix
-              ./modules/nextcloud.nix
-              ./modules/nginx-routes.nix
-              ./modules/nginx.nix
-              ./modules/node.nix
-              ./modules/postgres.nix
-              ./modules/privatebin.nix
-              ./modules/samba.nix
-              ./modules/scalpel.nix
-              ./modules/ssh.nix
-              ./modules/static-ip.nix
-              ./modules/syncthing.nix
-              ./modules/tesseract.nix
-              ./modules/vaultwarden.nix
-              sops-nix.nixosModules.sops
-              "${nixpkgs-privatebin}/nixos/modules/services/web-apps/privatebin.nix"
-              {
-                users.mutableUsers = false;
-              }
-            ];
-            specialArgs = {
-              base = null;
-              drive_paths = import ./variables/drive_paths.nix;
-              inherit system;
-              helpers = helpers.helpers { inherit pkgs; };
-            };
-          };
-        in
-        base.extendModules {
+    in rec {
+      nixosConfigurations.clicks = let
+        base = nixpkgs.lib.nixosSystem {
+          inherit system pkgs;
           modules = [
-            scalpel.nixosModules.scalpel
+            ./default/configuration.nix
+            ./default/hardware-configuration.nix
+            ./modules/cache.nix
+            ./modules/clamav.nix
+            ./modules/cloudflare-ddns.nix
+            ./modules/dmarc.nix
+            ./modules/dnsmasq.nix
+            ./modules/doas.nix
+            ./modules/docker.nix
+            ./modules/drivePaths.nix
+            ./modules/ecryptfs.nix
+            ./modules/fail2ban.nix
+            ./modules/gerrit.nix
+            ./modules/git.nix
+            ./modules/grafana.nix
+            ./modules/home-manager-users.nix
+            ./modules/keycloak.nix
+            ./modules/kitty.nix
+            ./modules/loginctl-linger.nix
+            ./modules/matrix.nix
+            ./modules/mongodb.nix
+            ./modules/networking.nix
+            ./modules/nextcloud.nix
+            ./modules/nginx-routes.nix
+            ./modules/nginx.nix
+            ./modules/node.nix
+            ./modules/postgres.nix
+            ./modules/privatebin.nix
+            ./modules/samba.nix
+            ./modules/scalpel.nix
+            ./modules/ssh.nix
+            ./modules/static-ip.nix
+            ./modules/syncthing.nix
+            ./modules/tesseract.nix
+            ./modules/vaultwarden.nix
+            sops-nix.nixosModules.sops
+            "${nixpkgs-privatebin}/nixos/modules/services/web-apps/privatebin.nix"
+            { users.mutableUsers = false; }
           ];
-          specialArgs = { inherit base; };
+          specialArgs = {
+            base = null;
+            drive_paths = import ./variables/drive_paths.nix;
+            inherit system;
+            helpers = helpers.helpers { inherit pkgs; };
+          };
         };
+      in base.extendModules {
+        modules = [ scalpel.nixosModules.scalpel ];
+        specialArgs = { inherit base; };
+      };
 
       nixosConfigurations.clicks-without-mongodb =
         nixosConfigurations.clicks.extendModules {
-          modules = [
-            { services.mongodb.enable = nixpkgs.lib.mkForce false; }
-          ];
+          modules = [{ services.mongodb.enable = nixpkgs.lib.mkForce false; }];
         };
 
       deploy.nodes.clicks = {
@@ -119,79 +104,76 @@
             path = deploy-rs.lib.x86_64-linux.activate.nixos
               self.nixosConfigurations.clicks;
           };
-        } // (
-          let
-            mkServiceConfig = service: {
-              remoteBuild = true;
-              user = service;
+        } // (let
+          mkServiceConfig = service: {
+            remoteBuild = true;
+            user = service;
 
-              profilePath = "/nix/var/nix/profiles/per-user/${service}/home-manager";
-              path =
-                deploy-rs.lib.x86_64-linux.activate.home-manager (home-manager.lib.homeManagerConfiguration
+            profilePath =
+              "/nix/var/nix/profiles/per-user/${service}/home-manager";
+            path = deploy-rs.lib.x86_64-linux.activate.home-manager
+              (home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [
                   {
-                    inherit pkgs;
-                    modules = [
-                      {
-                        home.homeDirectory = "/services/${service}";
-                        home.username = service;
-                        home.stateVersion = "22.11";
-                        programs.home-manager.enable = true;
-                      }
-                      "${./services}/${service}"
-                    ];
-                    extraSpecialArgs = { inherit (inputs) nixpkgs-clicksforms; inherit system; };
-                  });
-            };
-          in
-          nixpkgs.lib.pipe ./services [
-            builtins.readDir
-            (nixpkgs.lib.filterAttrs (_name: value: value == "directory"))
-            builtins.attrNames
-            (map (name: {
-              inherit name; value = mkServiceConfig name;
-            }))
-            builtins.listToAttrs
-          ]
-        ) // (
-          let
-            mkBlankConfig = username:
-              {
-                remoteBuild = true;
-                user = username;
+                    home.homeDirectory = "/services/${service}";
+                    home.username = service;
+                    home.stateVersion = "22.11";
+                    programs.home-manager.enable = true;
+                  }
+                  "${./services}/${service}"
+                ];
+                extraSpecialArgs = {
+                  inherit (inputs) nixpkgs-clicksforms;
+                  inherit system;
+                };
+              });
+          };
+        in nixpkgs.lib.pipe ./services [
+          builtins.readDir
+          (nixpkgs.lib.filterAttrs (_name: value: value == "directory"))
+          builtins.attrNames
+          (map (name: {
+            inherit name;
+            value = mkServiceConfig name;
+          }))
+          builtins.listToAttrs
+        ]) // (let
+          mkBlankConfig = username: {
+            remoteBuild = true;
+            user = username;
 
-                profilePath = "/nix/var/nix/profiles/per-user/${username}/home-manager";
-                path =
-                  deploy-rs.lib.x86_64-linux.activate.home-manager (home-manager.lib.homeManagerConfiguration
-                    {
-                      inherit pkgs;
-                      modules = [
-                        {
-                          home.username = username;
-                          home.stateVersion = "22.11";
-                          programs.home-manager.enable = true;
-                        }
-                        "${./homes}/${username}"
-                      ];
-                    });
-              };
-          in
-          nixpkgs.lib.pipe ./homes [
-            builtins.readDir
-            (nixpkgs.lib.filterAttrs (_name: value: value == "directory"))
-            builtins.attrNames
-            (map (name: {
-              inherit name; value = mkBlankConfig name;
-            }))
-            builtins.listToAttrs
-          ]
-        );
+            profilePath =
+              "/nix/var/nix/profiles/per-user/${username}/home-manager";
+            path = deploy-rs.lib.x86_64-linux.activate.home-manager
+              (home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [
+                  {
+                    home.username = username;
+                    home.stateVersion = "22.11";
+                    programs.home-manager.enable = true;
+                  }
+                  "${./homes}/${username}"
+                ];
+              });
+          };
+        in nixpkgs.lib.pipe ./homes [
+          builtins.readDir
+          (nixpkgs.lib.filterAttrs (_name: value: value == "directory"))
+          builtins.attrNames
+          (map (name: {
+            inherit name;
+            value = mkBlankConfig name;
+          }))
+          builtins.listToAttrs
+        ]);
         hostname = "clicks";
         profilesOrder = [ "system" ];
       };
 
-      devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = [ pkgs.deploy-rs ];
-      };
+      devShells.x86_64-linux.default =
+        pkgs.mkShell { packages = [ pkgs.deploy-rs ]; };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };

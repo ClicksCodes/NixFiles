@@ -14,7 +14,8 @@
       hostname-strict = false;
 
       https-certificate-file = "/var/keycloak/login.clicks.codes.rsa.cert.pem";
-      https-certificate-key-file = "/var/keycloak/login.clicks.codes.rsa.private.pem";
+      https-certificate-key-file =
+        "/var/keycloak/login.clicks.codes.rsa.private.pem";
     };
     database = {
       createLocally = false;
