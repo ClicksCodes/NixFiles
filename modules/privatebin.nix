@@ -1,5 +1,10 @@
 { config, lib, base, ... }:
 lib.recursiveUpdate {
+  services.nginx.virtualHosts.privatebin = {
+    serverName = lib.mkForce "privatebin.clicks.codes";
+    enableACME = lib.mkForce true;
+    forceSSL = lib.mkForce true;
+  };
   services.privatebin = {
     enable = true;
     settings = {
@@ -21,12 +26,9 @@ lib.recursiveUpdate {
         langaugeselection = true;
       };
 
-      nginx = {
-        serverName = "privatebin.clicks.codes";
-        enableACME = true;
-      };
-
       expire.default = "1month";
+
+      nginx.forceSSL = lib.mkForce true;
 
       expire_options = {
         "5min" =

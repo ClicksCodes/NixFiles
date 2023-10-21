@@ -14,9 +14,14 @@
   users.groups.nextcloud = { };
 
   services.nextcloud.enable = true;
+  services.nextcloud.https = true;
   services.nextcloud.config.adminpassFile =
     config.sops.secrets.nextcloud_admin_password.path;
   services.nextcloud.hostName = "nextcloud.clicks.codes";
+  services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+    enableACME = true;
+    forceSSL = true;
+  };
   services.nextcloud.package = pkgs.nextcloud27;
   services.nextcloud.poolSettings = {
     pm = "dynamic";
@@ -35,7 +40,7 @@
     dbpassFile = config.sops.secrets.clicks_nextcloud_db_password.path;
     dbname = "nextcloud";
     dbhost = "localhost";
-    extraTrustedDomains = [ "nextcloud.clicks.codes" "docs.clicks.codes" ];
+    extraTrustedDomains = [ "cloud.clicks.codes" "docs.clicks.codes" ];
   };
 
   services.nextcloud.extraOptions = { social_login_auto_redirect = true; };

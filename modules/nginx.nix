@@ -184,11 +184,14 @@ lib.recursiveUpdate {
       sopsFile = ../secrets/cloudflare-cert.env.bin;
       format = "binary";
     };
+
+    users.users.nginx.extraGroups = [ config.users.users.acme.group ];
   };
 } (if base != null then {
-  config.security.acme.certs = builtins.mapAttrs (_: v: {
-    webroot = null;
-    dnsProvider = "cloudflare";
-  }) base.config.security.acme.certs;
+  config.security.acme.certs = lib.mkForce (builtins.mapAttrs (_: v:
+    (lib.filterAttrs (n: _: n != "directory") v) // {
+      webroot = null;
+      dnsProvider = "cloudflare";
+    }) base.config.security.acme.certs);
 } else
   { })
