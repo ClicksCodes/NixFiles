@@ -124,6 +124,7 @@ lib.recursiveUpdate {
               internal = lib.mkOption { type = str; };
               external = lib.mkOption { type = port; };
               protocol = lib.mkOption { type = strMatching "^(tcp|udp)$"; };
+              haproxy = lib.mkOption { type = bool; };
             };
           });
         example = lib.literalExpression ''
@@ -157,7 +158,8 @@ lib.recursiveUpdate {
             listen ${builtins.toString stream.external}${
               lib.optionalString (stream.protocol == "udp") " udp"
             };
-            proxy_pass ${builtins.toString stream.internal};
+            proxy_pass ${stream.internal};
+            ${if stream.haproxy then "proxy_protocol on;" else ""}
         }
       '') config.clicks.nginx.streams);
     };

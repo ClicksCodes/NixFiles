@@ -37,9 +37,7 @@
       "smtp.coded.codes"
       "smtp.clicks.codes"
       "smtp.hopescaramels.com"
-    ] (ReverseProxy "localhost:1080"))
-    (Hosts [ "mail.clicks.codes" "mail.coded.codes" "mail.hopescaramels.com" ]
-      (ReverseProxy "localhost:1080"))
+    ] (ReverseProxy "127.0.0.1:1080"))
     (Host "matrix.coded.codes" (Directory "${builtins.toString
       (pkgs.schildichat-web.override {
         conf = {
@@ -91,12 +89,12 @@
     ])
   ];
   clicks.nginx.streams = with helpers.nginx; [
-    (Stream 143 "localhost:1143" "tcp") # imap
-    (Stream 993 "localhost:1993" "tcp") # imap
-    (Stream 110 "localhost:1110" "tcp") # pop3
-    (Stream 995 "localhost:1995" "tcp") # pop3
-    (Stream 25 "localhost:1025" "tcp") # smtp
-    (Stream 465 "localhost:1465" "tcp") # smtp
-    (Stream 587 "localhost:1587" "tcp") # smtp
+    (ProxyStream 143 "127.0.0.1:1143" "tcp") # imap
+    (ProxyStream 993 "127.0.0.1:1993" "tcp") # imap
+    (ProxyStream 110 "127.0.0.1:1110" "tcp") # pop3
+    (ProxyStream 995 "127.0.0.1:1995" "tcp") # pop3
+    (ProxyStream 25 "127.0.0.1:1025" "tcp") # smtp
+    (ProxyStream 465 "127.0.0.1:1465" "tcp") # smtp
+    (ProxyStream 587 "127.0.0.1:1587" "tcp") # smtp
   ];
 }

@@ -59,11 +59,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1697846472,
-        "narHash": "sha256-OWxoAM79X6fssw6CnlhPvxfmuoC4Aq4PX+0aYv/ONBQ=",
+        "lastModified": 1698014047,
+        "narHash": "sha256-UkFM0AMx5876howd1rTBxJKt/J9TioxkRBRaE/3VXMg=",
         "ref": "refs/heads/main",
-        "rev": "5c7ee827fd35a9b2e489e919796f73536788c483",
-        "revCount": 11,
+        "rev": "06e9c2b007673ff27fa3620c17644e8ba8f33ced",
+        "revCount": 15,
         "type": "git",
         "url": "https://git.clicks.codes/Clicks/NixHelpers"
       },
