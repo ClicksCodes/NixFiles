@@ -5,22 +5,22 @@
     (Host "codedpc.coded.codes" (ReverseProxy "SamuelDesktop.local:3389"))
     (Host "testing.coded.codes" (ReverseProxy "SamuelDesktop.local:3000"))
     (Hosts [ "kavita.coded.codes" "reading.coded.codes" ]
-      (ReverseProxy "localhost:5000"))
+      (ReverseProxy "127.0.0.1:5000"))
     (Host "www.clicks.codes"
       (RedirectPermanent "https://clicks.codes$request_uri"))
     (Host "clicks.codes" (ReverseProxy "127.0.0.1:3000"))
-    (Host "passwords.clicks.codes" (ReverseProxy "localhost:8452"))
-    (Host "login.clicks.codes" (ReverseProxy "localhost:9083"))
+    (Host "passwords.clicks.codes" (ReverseProxy "127.0.0.1:8452"))
+    (Host "login.clicks.codes" (ReverseProxy "127.0.0.1:9083"))
     (Hosts [
       "syncthing.clicks.codes"
       "syncthing.coded.codes"
       "syncthing.thecoded.prof"
       "syncthing.hopescaramels.com"
-    ] (ReverseProxy "localhost:8384"))
+    ] (ReverseProxy "127.0.0.1:8384"))
     (Hosts [ "gerrit.clicks.codes" "git.clicks.codes" ]
       (ReverseProxy "127.0.0.255:1000"))
     (Hosts [ "grafana.clicks.codes" "logs.clicks.codes" ]
-      (ReverseProxy "localhost:9052"))
+      (ReverseProxy "127.0.0.1:9052"))
     (InsecureHosts [
       "mail.clicks.codes"
       "mail.coded.codes"
@@ -63,7 +63,7 @@
         };
       })}"))
     (Host "api.clicks.codes"
-      (Path "/nucleus/" (ReverseProxy "localhost:10000")))
+      (Path "/nucleus/" (ReverseProxy "127.0.0.1:10000")))
     (Host "api.coded.codes"
       (Path "/nucleus/" (ReverseProxy "SamuelDesktop.local:10000")))
     (Host "coded.codes" (Compose [
@@ -73,7 +73,7 @@
     ]))
     (Host "matrix-backend.coded.codes" (Compose [
       (Path "/_synapse/admin/" (Status 403))
-      (ReverseProxy "localhost:4527")
+      (ReverseProxy "127.0.0.1:4527")
     ]))
   ];
   clicks.nginx.serviceAliases = with helpers.nginx; [
