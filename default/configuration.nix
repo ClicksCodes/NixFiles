@@ -82,7 +82,7 @@
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIH+TJRuMpDPgh6Wp2h+E+O/WoyEAVyWo6SN8oxm2JZNVAAAABHNzaDo= samue@SamuelDesktop"
     ];
   };
-  users.users.pinea = {
+  users.users.pineafan = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     shell = pkgs.zsh;
