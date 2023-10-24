@@ -60,6 +60,16 @@
         "https://github.com/nextcloud-releases/richdocuments/releases/download/v8.2.0/richdocuments-v8.2.0.tar.gz";
       sha256 = "sha256-PKw7FXSWvden2+6XjnUDOvbTF71slgeTF/ktS/l2+Dk=";
     };
+    calendar = pkgs.fetchNextcloudApp {
+      url =
+        "https://github.com/nextcloud-releases/calendar/releases/download/v4.5.2/calendar-v4.5.2.tar.gz";
+      sha256 = "sha256-n7GjgAyw2SLoZTEfakmI3IllWUk6o1MF89Zt3WGhR6A=";
+    };
+    contacts = pkgs.fetchNextcloudApp {
+      url =
+        "https://github.com/nextcloud-releases/contacts/releases/download/v5.4.2/contacts-v5.4.2.tar.gz";
+      sha256 = "sha256-IkKHJ3MY/UPZqa4H86WGOEOypffMIHyJ9WvMqkq/4t8=";
+    };
   };
 
   sops.secrets.nextcloud_admin_password = {
