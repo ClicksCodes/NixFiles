@@ -81,6 +81,7 @@ in lib.recursiveUpdate {
         startTime = "Sun 00:00";
         interval = "1 week";
       };
+      repository."*".defaultSubmitType = "REBASE_ALWAYS";
       gerrit = {
         basePath = "/var/lib/gerrit/repos";
         defaultBranch = "refs/heads/main";
