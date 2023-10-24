@@ -1,6 +1,7 @@
 { pkgs, helpers, config, lib, ... }: {
   clicks.nginx.services = with helpers.nginx; [
     (Host "signup.hopescaramels.com" (ReverseProxy "caramels:1024"))
+    (Host "freeflowtaekwondo.com" (ReverseProxy "generic:1026"))
     (Host "homebridge.coded.codes" (ReverseProxy "CodedPi.local:8581"))
     (Host "codedpc.coded.codes" (ReverseProxy "SamuelDesktop.local:3389"))
     (Host "testing.coded.codes" (ReverseProxy "SamuelDesktop.local:3000"))
