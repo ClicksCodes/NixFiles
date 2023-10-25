@@ -7,8 +7,6 @@
     (Host "testing.coded.codes" (ReverseProxy "SamuelDesktop.local:3000"))
     (Hosts [ "kavita.coded.codes" "reading.coded.codes" ]
       (ReverseProxy "127.0.0.1:5000"))
-    (Host "www.clicks.codes"
-      (RedirectPermanent "https://clicks.codes$request_uri"))
     (Host "clicks.codes" (ReverseProxy "127.0.0.1:3000"))
     (Host "passwords.clicks.codes" (ReverseProxy "127.0.0.1:8452"))
     (Host "login.clicks.codes" (ReverseProxy "127.0.0.1:9083"))
@@ -81,12 +79,20 @@
     (Aliases "nextcloud.clicks.codes" [
       "cloud.clicks.codes"
       "docs.clicks.codes"
+      "www.cloud.clicks.codes"
+      "www.docs.clicks.codes"
+      "www.nextcloud.clicks.codes"
     ])
     (Aliases "privatebin" [
       "paste.clicks.codes"
       "paste.coded.codes"
       "paste.thecoded.prof"
       "paste.hopescaramels.com"
+      "www.paste.clicks.codes"
+      "www.paste.coded.codes"
+      "www.paste.thecoded.prof"
+      "www.paste.hopescaramels.com"
+      "www.privatebin.clicks.codes"
     ])
   ];
   clicks.nginx.streams = with helpers.nginx; [
