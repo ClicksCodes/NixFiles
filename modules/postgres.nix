@@ -48,7 +48,7 @@
     ] ++ (map (name: ({
       inherit name;
       ensurePermissions = { "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES"; };
-    })) [ "minion" "coded" "pinea" ]);
+    })) [ "minion" "coded" "pineafan" ]);
 
   };
 
