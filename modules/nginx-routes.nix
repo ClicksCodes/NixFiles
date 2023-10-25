@@ -2,9 +2,9 @@
   clicks.nginx.services = with helpers.nginx; [
     (Host "signup.hopescaramels.com" (ReverseProxy "caramels:1024"))
     (Host "freeflowtaekwondo.com" (ReverseProxy "generic:1026"))
-    (Host "homebridge.coded.codes" (ReverseProxy "CodedPi.local:8581"))
-    (Host "codedpc.coded.codes" (ReverseProxy "SamuelDesktop.local:3389"))
-    (Host "testing.coded.codes" (ReverseProxy "SamuelDesktop.local:3000"))
+    (Host "homebridge.coded.codes" (ReverseProxy "CodedPi:8581"))
+    (Host "codedpc.coded.codes" (ReverseProxy "SamuelDesktop:3389"))
+    (Host "testing.coded.codes" (ReverseProxy "SamuelDesktop:3000"))
     (Hosts [ "kavita.coded.codes" "reading.coded.codes" ]
       (ReverseProxy "127.0.0.1:5000"))
     (Host "clicks.codes" (ReverseProxy "127.0.0.1:3000"))
@@ -64,7 +64,7 @@
     (Host "api.clicks.codes"
       (Path "/nucleus/" (ReverseProxy "127.0.0.1:10000")))
     (Host "api.coded.codes"
-      (Path "/nucleus/" (ReverseProxy "SamuelDesktop.local:10000")))
+      (Path "/nucleus/" (ReverseProxy "SamuelDesktop:10000")))
     (Host "coded.codes" (Compose [
       (Path "/.well-known/matrix/"
         (File ./nginx/coded.codes/.well-known/matrix))
