@@ -70,6 +70,16 @@
         "https://github.com/nextcloud-releases/contacts/releases/download/v5.4.2/contacts-v5.4.2.tar.gz";
       sha256 = "sha256-IkKHJ3MY/UPZqa4H86WGOEOypffMIHyJ9WvMqkq/4t8=";
     };
+    tasks = pkgs.fetchNextcloudApp {
+      url =
+        "https://github.com/nextcloud/tasks/releases/download/v0.15.0/tasks.tar.gz";
+      sha256 = "sha256-zMMqtEWiXmhB1C2IeWk8hgP7eacaXLkT7Tgi4NK6PCg=";
+    };
+    appointments = pkgs.fetchNextcloudApp {
+      url =
+        "https://github.com/SergeyMosin/Appointments/raw/v1.15.4/build/artifacts/appstore/appointments.tar.gz";
+      sha256 = "sha256-2Oo7MJBPiBUBf4kti4or5nX+QiXT1Tkw3KowUGCj67E=";
+    };
   };
 
   sops.secrets.nextcloud_admin_password = {
