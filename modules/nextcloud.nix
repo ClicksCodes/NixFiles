@@ -80,6 +80,21 @@
         "https://github.com/SergeyMosin/Appointments/raw/v1.15.4/build/artifacts/appstore/appointments.tar.gz";
       sha256 = "sha256-2Oo7MJBPiBUBf4kti4or5nX+QiXT1Tkw3KowUGCj67E=";
     };
+    mail = pkgs.fetchNextcloudApp {
+      url =
+        "https://github.com/nextcloud-releases/mail/releases/download/v3.4.4/mail-v3.4.4.tar.gz";
+      sha256 = "sha256-2+EUVjeFW0mrnR23aU5UHZtGjqpDE11qHXu6PWhUTCs=";
+    };
+    spreed = pkgs.fetchNextcloudApp {  # nextcloud talk
+      url =
+        "https://github.com/nextcloud-releases/spreed/releases/download/v17.1.2/spreed-v17.1.2.tar.gz";
+      sha256 = "sha256-OvZD/k1t4MAJ/BXbHzli6+V/bsgzE6iZQGrC9cG3b8E=";
+    };
+    notes = pkgs.fetchNextcloudApp {
+      url =
+        "https://github.com/nextcloud-releases/notes/releases/download/v4.8.1/notes.tar.gz";
+      sha256 = "sha256-7GkTGyGTvtDbZsq/zOdbBE7xh6DZO183W6I5XX1ekbw=";
+    };
   };
 
   sops.secrets.nextcloud_admin_password = {
