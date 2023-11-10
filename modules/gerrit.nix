@@ -112,40 +112,9 @@ in lib.recursiveUpdate {
     };
 
     plugins = [
-      (derivation {
-        name =
-          "oauth.jar"; # HACK: wrapping a derivation in a derivation to rename it seems like a bad hack... but bazel would not build if I didn't (I think because it didn't like the .jar extension...) check why though?
-        src = (pkgs.buildBazelPackage {
-          __noChroot = true; # FIXME: terrible, horrible, no good, very bad
-          # name = "gerrit-oauth-provider.jar";
-          pname = "gerrit-oauth-provider.jar";
-          version = "unstable-2023-10-08";
-          src = pkgs.fetchgit {
-            url = "https://gerrit.googlesource.com/plugins/oauth";
-            rev = "1b3cc407cb2571d08601ab852e6e01f82d27160f";
-            hash = "sha256-yC/8qnkDbfIujl+Cvamr+EQSwto1DcIUWXh5cwDEZHo=";
-            deepClone =
-              true; # FIXME: this bazel build uses some git stuff, maybe we should try replacing with fakegit?
-          };
-          bazelTargets = [ "oauth" ];
-          bazel = pkgs.bazel_4;
-          buildAttrs = { };
-          fetchAttrs.sha256 =
-            "sha256-i5wOTn2NqqgJf4TCIqaCucpXu+5Vm5C84UPrGYFMSzc=";
-
-          postUnpack = ''
-            echo "4.2.2" > */.bazelversion  # nixpkgs only has certain bazel versions, so let's upgrade the patch of this one
-          '';
-
-          buildInputs = with pkgs; [ git curl jdk11 ];
-
-          postInstall = ''
-            cp bazel-bin/oauth.jar $out
-          '';
-        });
-        builder = "/bin/sh";
-        args = [ "-c" "${pkgs.coreutils}/bin/cp $src $out" ];
-        inherit system;
+      (pkgs.fetchurl {
+        url = "https://gerrit-ci.gerritforge.com/job/plugin-oauth-bazel-master-master/55/artifact/bazel-bin/plugins/oauth/oauth.jar";
+        hash = "sha256-Qil1CIh/+XC15rKfW0iYR9u370eF2TXnCNSmQfr+7/8=";
       })
     ];
     builtinPlugins = [
@@ -163,9 +132,6 @@ in lib.recursiveUpdate {
 
     listenAddress = "127.0.0.255:1000";
   };
-
-  nix.settings.sandbox =
-    "relaxed"; # FIXME: terrible, horrible, no good, very bad, here to support buildBazelPackage's use of cURL
 
   sops.secrets = {
     gerrit_email_private_key = {

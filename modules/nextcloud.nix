@@ -52,8 +52,8 @@
       sha256 = "sha256-96/wtK7t23fXVRcntDONjgb5bYtZuaNZzbvQCa5Gsj4=";
     };
     richdocumentscode = pkgs.fetchNextcloudApp {
-      url = "redacted";
-      sha256 = "sha256-XYtjBZCIQ6+PL3BNLSZfJTgLLpOyphzR5HOAwI7bWx0=";
+      url = "https://github.com/CollaboraOnline/richdocumentscode/releases/download/23.5.503/richdocumentscode.tar.gz";
+      sha256 = "sha256-5BEN2YXRsMy+zyBBO0KLRMCkTOGv1RdPp1xcDFRNr2I=";
     };
     richdocuments = pkgs.fetchNextcloudApp {
       url =
